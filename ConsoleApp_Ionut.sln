@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34622.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp_Ionut", "ConsoleApp_Ionut\ConsoleApp_Ionut.csproj", "{29E6147B-7F70-4B8E-85BA-310C57994022}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK_console_sample01", "OpenTK_console_sample01\OpenTK_console_sample01.csproj", "{B559D5FD-2006-45D7-B39E-143F9DEC20C6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{29E6147B-7F70-4B8E-85BA-310C57994022}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29E6147B-7F70-4B8E-85BA-310C57994022}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29E6147B-7F70-4B8E-85BA-310C57994022}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29E6147B-7F70-4B8E-85BA-310C57994022}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B559D5FD-2006-45D7-B39E-143F9DEC20C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B559D5FD-2006-45D7-B39E-143F9DEC20C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B559D5FD-2006-45D7-B39E-143F9DEC20C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B559D5FD-2006-45D7-B39E-143F9DEC20C6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4D0744E0-9A18-4AC8-8624-FED0AB14597E}
+	EndGlobalSection
+EndGlobal
