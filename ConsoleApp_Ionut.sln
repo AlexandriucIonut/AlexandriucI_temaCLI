@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp_Ionut", "Console
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK_console_sample01", "OpenTK_console_sample01\OpenTK_console_sample01.csproj", "{B559D5FD-2006-45D7-B39E-143F9DEC20C6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenGL_conn_ImmediateMode", "OpenGL_conn_ImmediateMode\OpenGL_conn_ImmediateMode.csproj", "{72E8E51E-FEE7-41EE-B258-DB001F86366C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{B559D5FD-2006-45D7-B39E-143F9DEC20C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B559D5FD-2006-45D7-B39E-143F9DEC20C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B559D5FD-2006-45D7-B39E-143F9DEC20C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72E8E51E-FEE7-41EE-B258-DB001F86366C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72E8E51E-FEE7-41EE-B258-DB001F86366C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72E8E51E-FEE7-41EE-B258-DB001F86366C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72E8E51E-FEE7-41EE-B258-DB001F86366C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

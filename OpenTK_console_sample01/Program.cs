@@ -61,6 +61,28 @@ class InteractiveWindow : GameWindow
         GL.End();
 
         SwapBuffers();
+
+
+        /** Codul pentru laboratorul 3*/
+        /*GL.Clear(ClearBufferMask.ColorBufferBit);
+
+        // Setăm lățimea liniilor
+        GL.LineWidth(3.0f); // Lățimea liniilor
+        GL.Color3(0.0f, 1.0f, 0.0f); // Culoarea verde
+
+        GL.Begin(PrimitiveType.Lines);
+        GL.Vertex2(-0.5f, 0.0f);
+        GL.Vertex2(0.5f, 0.0f);
+        GL.End();
+
+        // Setăm dimensiunea punctului
+        GL.PointSize(10.0f); // Dimensiunea punctului
+        GL.Color3(1.0f, 0.0f, 0.0f); // Culoarea roșie
+
+        GL.Begin(PrimitiveType.Points);
+        GL.Vertex2(0.0f, 0.0f); // Desenăm un punct la originea coordonatelor
+        GL.End();*/
+
     }
 
     protected override void OnResize(EventArgs e)
