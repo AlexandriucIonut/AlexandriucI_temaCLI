@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Runtime.ConstrainedExecution;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
@@ -8,7 +9,7 @@ using OpenTK.Input;
 class InteractiveWindow : GameWindow
 {
     private Vector3[] vertices = new Vector3[3];
-    private float[] color = { 1.0f, 0.0f, 0.0f, 1.0f }; 
+    private float[] color = { 0.0f, 0.0f, 0.0f, 1.0f }; 
     private float cameraAngleX = 0.0f;  
     private float cameraAngleY = 0.0f;  
 
@@ -20,15 +21,31 @@ class InteractiveWindow : GameWindow
     protected override void OnLoad(EventArgs e)
     {
         base.OnLoad(e);
-        GL.ClearColor(0.39f, 0.58f, 0.93f, 1.0f); 
+        GL.ClearColor(0.66f, 0.25f, 0.95f, 1.0f);
 
         LoadTriangleVertices("triangle_vertices.txt");
 
-        GL.Enable(EnableCap.DepthTest);  
+        GL.Enable(EnableCap.DepthTest);
+
+        Console.WriteLine("Controale: \n R - amplifica culoarea rosie \n G - amplifica culoarea verde \n B - amplifica culoarea albastra \n C - reseteaza culoarea triunghiului \n");
+
     }
 
     private void LoadTriangleVertices(string filePath)
     {
+        if (!File.Exists(filePath))
+        {
+            using (StreamWriter writer = new StreamWriter(filePath))
+            {
+                writer.WriteLine("0.0 0.5 0.0");   
+                writer.WriteLine("-0.5 -0.5 0.0"); 
+                writer.WriteLine("0.5 -0.5 0.0"); 
+            }
+
+            Console.WriteLine("Fișierul nu a fost găsit. A fost creat un fișier nou cu coordonate implicite.");
+        }
+
+        // Citește coordonatele din fișier
         string[] lines = File.ReadAllLines(filePath);
         for (int i = 0; i < 3; i++)
         {
@@ -37,21 +54,35 @@ class InteractiveWindow : GameWindow
         }
     }
 
+    bool clear;
     protected override void OnUpdateFrame(FrameEventArgs e)
     {
         base.OnUpdateFrame(e);
 
-        
-        if (Keyboard.GetState().IsKeyDown(Key.R)) color[0] = Math.Min(1.0f, color[0] + 0.01f);  
-        if (Keyboard.GetState().IsKeyDown(Key.G)) color[1] = Math.Min(1.0f, color[1] + 0.01f);  
-        if (Keyboard.GetState().IsKeyDown(Key.B)) color[2] = Math.Min(1.0f, color[2] + 0.01f);  
-        if (Keyboard.GetState().IsKeyDown(Key.A)) color[3] = Math.Max(0.0f, color[3] - 0.01f);  
 
-        
-        if (Keyboard.GetState().IsKeyDown(Key.C))
+        if (Keyboard.GetState().IsKeyDown(Key.R)) color[0] = Math.Min(1.0f, color[0] + 0.01f);
+        if (Keyboard.GetState().IsKeyDown(Key.G)) color[1] = Math.Min(1.0f, color[1] + 0.01f);
+        if (Keyboard.GetState().IsKeyDown(Key.B)) color[2] = Math.Min(1.0f, color[2] + 0.01f);
+
+
+        if (Keyboard.GetState().IsKeyDown(Key.C) && !clear)
         {
-            color[0] = 1.0f; color[1] = 0.0f; color[2] = 0.0f; color[3] = 1.0f; 
+            Console.Clear();
+            Console.WriteLine("Controale: \n R - amplifica culoarea rosie \n G - amplifica culoarea verde \n B - amplifica culoarea albastra \n C - reseteaza culoarea triunghiului \n");
+
+            clear = true;
+
+            Console.WriteLine($"Vertex 1 RGB: " + color[0].ToString() + ", 0.0, 0.0");
+            Console.WriteLine($"Vertex 2 RGB: 0.0, " + color[1].ToString() + ", 0.0");
+            Console.WriteLine($"Vertex 3 RGB: 0.0, 0.0, " + color[2].ToString());
+            color[0] = 0.0f; color[1] = 0.0f; color[2] = 0.0f;
         }
+
+        if (Keyboard.GetState().IsKeyUp(Key.C))
+        {
+            clear = false;
+        }
+
     }
 
     protected override void OnMouseMove(MouseMoveEventArgs e)
@@ -71,25 +102,23 @@ class InteractiveWindow : GameWindow
 
         GL.MatrixMode(MatrixMode.Modelview);
         GL.LoadIdentity();
-        GL.Rotate(cameraAngleX, 0.0f, 1.0f, 0.0f);  // Rotirea pe axa Y
-        GL.Rotate(cameraAngleY, 1.0f, 0.0f, 0.0f);  // Rotirea pe axa X
+        GL.Rotate(cameraAngleX, 0.0f, 1.0f, 0.0f); 
+        GL.Rotate(cameraAngleY, 1.0f, 0.0f, 0.0f);  
 
         GL.Begin(PrimitiveType.Triangles);
 
         // Primul vertex roșu
-        GL.Color3(1.0f, 0.0f, 0.0f);
+        GL.Color3(color[0], 0.0f, 0.0f);
         GL.Vertex3(vertices[0]);
-        Console.WriteLine($"Vertex 1 RGB: 1.0, 0.0, 0.0");
 
-        // Al doilea vertex verde
-        GL.Color3(0.0f, 1.0f, 0.0f);
+
+        GL.Color3(0.0f, color[1], 0.0f);
         GL.Vertex3(vertices[1]);
-        Console.WriteLine($"Vertex 2 RGB: 0.0, 1.0, 0.0");
 
-        // Al treilea vertex albastru
-        GL.Color3(0.0f, 0.0f, 1.0f);
+
+        GL.Color3(0.0f, 0.0f, color[2]);
         GL.Vertex3(vertices[2]);
-        Console.WriteLine($"Vertex 3 RGB: 0.0, 0.0, 1.0");
+
 
         GL.End();
 
@@ -125,62 +154,3 @@ class InteractiveWindow : GameWindow
         }
     }
 }
-
-/** Raspunsuri lab 3*/
-/*2.Ce este anti-aliasing?
-
-Anti-aliasing este o tehnică utilizată în grafică computerizată pentru a reduce efectul de 
-„aliased edges”, care apare atunci când liniile sau contururile sunt desenate cu o rezoluție 
-scăzută. Efectul de aliasing se manifestă prin marginile zimțate sau pixelate.
-
-Cum funcționează? Anti-aliasing funcționează prin aplicarea unei metode de amestecare 
-a culorilor pixelilor de la marginea unui obiect pentru a crea o tranziție mai lină între culori,
-făcând marginile să pară mai netede.
-
-3. Efectul rulării comenzilor GL.LineWidth(float) și GL.PointSize(float)
-    GL.LineWidth(float): Această comandă controlează lățimea liniilor desenate. 
-De exemplu, glLineWidth(2.0f) va face liniile desenate să fie de două ori mai late decât 
-lățimea implicită. Această comandă funcționează în interiorul unei zone GL.Begin(),
-dar nu este garantat că toate plăcile grafice vor accepta toate lățimile de linie.
-
-    GL.PointSize(float): Această comandă controlează dimensiunea punctelor desenate. 
-De exemplu, glPointSize(5.0f) va face ca punctele să fie de 5 ori mai mari decât dimensiunea 
-implicită. De asemenea, aceasta funcționează în interiorul unei zone GL.Begin().
-
-4. Efectul directivelor de desenare
-    LineLoop: Atunci când se utilizează GL.LineLoop, se creează o linie închisă conectând 
-ultimele vertexuri cu primul. Aceasta este utilă pentru a desena poligoane deschise.
-
-    LineStrip: Cu GL.LineStrip, se desenază o serie de linii conectate între ele,
-folosind vertexurile în ordinea în care sunt definite. Aceasta creează o formă de linii continue.
-
-    TriangleFan: GL.TriangleFan permite desenarea unui set de triunghiuri care partajează 
-un vârf comun. Aceasta este o metodă eficientă de a crea forme convexe.
-
-    TriangleStrip: GL.TriangleStrip este similar cu TriangleFan, dar pentru a forma triunghiuri,
-se utilizează un set de vertexuri adiționale. Aceasta permite desenarea unei forme mai complexe 
-cu mai puține vertexuri.
-
-6. Importanța culorilor diferite în desenarea obiectelor 3D
-Folosirea culorilor diferite (gradiente sau culori selectate pe suprafață) este importantă 
-în desenarea obiectelor 3D pentru a crea un efect vizual mai plăcut și a spori profunzimea. 
-Culorile ajută la evidențierea detaliilor și formelor, permițând spectatorilor să perceapă 
-mai bine volumul și textura obiectului.
-
-7. Ce reprezintă un gradient de culoare?
-Un gradient de culoare este o tranziție lină între două sau mai multe culori. În OpenGL,
-acesta se poate obține prin interpolarea culorilor între vertexuri, permițându-le să se 
-amestece între ele. Poți realiza un gradient aplicând diferite culori fiecărui vertex și 
-lăsând OpenGL să gestioneze interpolarea.
-
-8.Ce este transparența în OpenGL?
-Transparența este controlată de canalul alpha. Acesta variază între valorile 0 și 1, unde 0 
-este complet transparent și 1 este complet opac. Utilizarea canalului de transparență permite crearea 
-unui efect de suprapunere vizuală, permițându-se ca obiectele din spate să fie vizibile prin cele din față.
-
-10.Efectul utilizării unei culori diferite pentru fiecare vertex
-Când folosești culori diferite pentru fiecare vertex în modul strip sau când desenezi triunghiuri, 
-OpenGL va aplica un gradient între acele culori. Aceasta înseamnă că culoarea va fi interpolată lin 
-între vertexuri, creând un efect de tranziție de la o culoare la alta pe suprafața obiectului.
-
- */
