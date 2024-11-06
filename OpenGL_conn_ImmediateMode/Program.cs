@@ -9,9 +9,15 @@ using OpenTK.Input;
 class InteractiveWindow : GameWindow
 {
     private Vector3[] vertices = new Vector3[3];
+<<<<<<< HEAD
     private float[] color = { 0.0f, 0.0f, 0.0f, 1.0f }; 
     private float cameraAngleX = 0.0f;  
     private float cameraAngleY = 0.0f;  
+=======
+    private float[] color = { 0.0f, 0.0f, 0.0f, 1.0f };
+    private float cameraAngleX = 0.0f;
+    private float cameraAngleY = 0.0f;
+>>>>>>> b98b702ea952c80b9fa1abe654c0a917838e3e74
 
     public InteractiveWindow()
         : base(800, 600, GraphicsMode.Default, "Triangle Color and Camera Control")
@@ -53,7 +59,10 @@ class InteractiveWindow : GameWindow
             vertices[i] = new Vector3(float.Parse(parts[0]), float.Parse(parts[1]), float.Parse(parts[2]));
         }
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> b98b702ea952c80b9fa1abe654c0a917838e3e74
     bool clear;
     protected override void OnUpdateFrame(FrameEventArgs e)
     {
@@ -89,7 +98,7 @@ class InteractiveWindow : GameWindow
     {
         base.OnMouseMove(e);
 
-        
+
         cameraAngleX += e.XDelta * 0.1f;
         cameraAngleY += e.YDelta * 0.1f;
     }
@@ -102,8 +111,13 @@ class InteractiveWindow : GameWindow
 
         GL.MatrixMode(MatrixMode.Modelview);
         GL.LoadIdentity();
+<<<<<<< HEAD
         GL.Rotate(cameraAngleX, 0.0f, 1.0f, 0.0f); 
         GL.Rotate(cameraAngleY, 1.0f, 0.0f, 0.0f);  
+=======
+        GL.Rotate(cameraAngleX, 0.0f, 1.0f, 0.0f);
+        GL.Rotate(cameraAngleY, 1.0f, 0.0f, 0.0f);
+>>>>>>> b98b702ea952c80b9fa1abe654c0a917838e3e74
 
         GL.Begin(PrimitiveType.Triangles);
 
@@ -133,7 +147,7 @@ class InteractiveWindow : GameWindow
         GL.Viewport(0, 0, Width, Height);
         GL.MatrixMode(MatrixMode.Projection);
         GL.LoadIdentity();
-        GL.Ortho(-1.0, 1.0, -1.0, 1.0, -10.0, 10.0);  
+        GL.Ortho(-1.0, 1.0, -1.0, 1.0, -10.0, 10.0);
         GL.MatrixMode(MatrixMode.Modelview);
     }
 
@@ -150,7 +164,7 @@ class InteractiveWindow : GameWindow
     {
         using (InteractiveWindow window = new InteractiveWindow())
         {
-            window.Run(60.0);  
+            window.Run(60.0);
         }
     }
 }
